@@ -1,0 +1,40 @@
+{
+  "name": "fast-food-clientside",
+  "version": "1.0.0",
+  "description": "This project uses React to consume an already existing API",
+  "main": "app.js",
+  "scripts": {
+    "test": "Echo none",
+    "start": "webpack-dev-server --hot --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewinsoul/Fast-Food-ClientSide.git"
+  },
+  "keywords": [
+    "React",
+    "Client-Side"
+  ],
+  "author": "Andrew Okoye",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewinsoul/Fast-Food-ClientSide/issues"
+  },
+  "homepage": "https://github.com/andrewinsoul/Fast-Food-ClientSide#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.3.1",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
+}
