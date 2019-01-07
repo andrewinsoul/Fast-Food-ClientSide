@@ -13,9 +13,12 @@ const Routes = () => (
         <Route path="/" component={HomePage} exact={true}/>
         <Route path="/login" component={Login} exact={true}/>
         <Route path="/signup" component={Signup} exact={true}/>
+        <Route path="/user" component={RegularUser} exact={true}/>
+        <Route path="/admin" component={AdminUser} exact={true}/>
       </Switch>
     </div>
   </BrowserRouter>
 );
 
 export default Routes;
+
