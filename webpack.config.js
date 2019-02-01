@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlwebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: [
@@ -6,7 +8,7 @@ module.exports = {
     'font-awesome/scss/font-awesome.scss'
   ],
   output: {
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, '/build'),
     filename: 'bundle.js'
   },
   module: {
@@ -56,18 +58,23 @@ module.exports = {
                 speed: 3,
               },
             },
-        }
-      ],
+          }
+        ],
         exclude: /node_modules/,
         include: __dirname,
       }
     ]
   },
+  plugins: [
+    new HtmlwebpackPlugin({
+      template: './index.html'
+    }),
+    new Dotenv()
+  ],
   resolve: { extensions: ["*", ".js", ".jsx"] },
   devtool: 'cheap-module-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'client/public'),
     historyApiFallback: true
   },
-  mode: 'development'
 };
