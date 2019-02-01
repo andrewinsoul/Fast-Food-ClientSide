@@ -3,8 +3,10 @@ import { Switch, Route, BrowserRouter } from "react-router-dom";
 import HomePage from "./components/presentational/Homepage";
 import Login from "./components/container/Login";
 import Signup from "./components/container/Signup";
-import RegularUser from "./components/container/RegularUser";
+import AllMenu from "./components/container/AllMenu";
+import RecentOrder from "./components/container/RecentOrder";
 import AdminUser from "./components/container/AdminUser";
+import PrivateRoute from "./PrivateRoute";
 
 const Routes = () => (
   <BrowserRouter>
@@ -13,7 +15,8 @@ const Routes = () => (
         <Route path="/" component={HomePage} exact />
         <Route path="/login" component={Login} exact />
         <Route path="/signup" component={Signup} exact />
-        <Route path="/order" component={RegularUser} exact />
+        <PrivateRoute path="/order" component={AllMenu} exact />
+        <Route path="/recent" component={RecentOrder} exact />
         <Route path="/admin" component={AdminUser} exact />
       </Switch>
     </div>
