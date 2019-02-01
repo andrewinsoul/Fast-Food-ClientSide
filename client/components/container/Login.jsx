@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../presentational/Header';
-import IndexFooter from '../presentational/Footer';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginAction } from '../../actions/authAction';
+import Header from '../presentational/Header';
+import IndexFooter from '../presentational/Footer';
+import authAction from '../../actions/authAction';
 
-
+/**
+ * @description represents the Login component
+ */
 class Login extends Component {
+  /**
+   *
+   * @param {object} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +26,10 @@ class Login extends Component {
     this.redirectUser = this.redirectUser.bind(this);
   }
 
+  /**
+   * @returns {null} - returns null
+   * @param {object} e - event object
+   */
   onChange(e) {
     const { name, value } = e.target;
     this.setState({
@@ -27,24 +37,49 @@ class Login extends Component {
     });
   }
 
+  /**
+   * @param {null} - returns null
+   * @returns {function} - function that updates the current state
+   */
   redirectUser() {
-    const { history, authenticated, user } = this.props;
-    if (authenticated && user) {
-      user.userAdmin ? history.push('/admin') : history.push('/user');
-      return;
-    } else {
-      return this.setState(() => ({ loginError: 'Invalid email or password' }));
+    try {
+      const { history, authenticated, user } = this.props;
+      if (authenticated && user) {
+        const userType = user.userAdmin ?
+          history.push('/admin') : history.push('/order');
+        return userType;
+      } else {
+        return this.setState(
+          () => (
+            { loginError: 'Invalid email or password' })
+        );
+      }
+    } catch (e) {
+      console.log(e.message);
     }
   }
+
+  /**
+   * @returns {null} - returns nothing
+   * @param {object} e - event object
+   */
   async onSubmit(e) {
     e.preventDefault();
     try {
-      await this.props.loginAction(this.state);
+      await this.props.authAction(
+        'http://localhost:8000/api/v1/auth/login',
+        this.state
+      );
       this.redirectUser();
     } catch (error) {
       console.error(error);
     }
   }
+
+  /**
+   * @param {null} - no parameter
+   * @returns {jsx} - returns jsx syntax
+   */
   render() {
     return (
       <div>
@@ -101,6 +136,9 @@ const mapStateToProps = (state) => ({
   user: state.authReducer.user
 });
 Login.propTypes = {
-  loginAction: PropTypes.func.isRequired
-}
-export default connect(mapStateToProps, { loginAction })(Login);
+  authAction: PropTypes.func.isRequired,
+  history: PropTypes.object,
+  authenticated: PropTypes.bool,
+  user: PropTypes.object.isRequired
+};
+export default connect(mapStateToProps, { authAction })(Login);

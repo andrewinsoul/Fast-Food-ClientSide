@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
-import { SET_CURRENT_USER } from './types';
+import SET_CURRENT_USER from './types';
 
 const setCurrentUser = user => ({
   user,
@@ -8,14 +8,13 @@ const setCurrentUser = user => ({
   type: SET_CURRENT_USER,
 });
 
-export const loginAction = userDetails => async dispatch => {
+export default (URL, userDetails) => async dispatch => {
   try {
     const response = await axios.post(
-      'http://localhost:8000/api/v1/auth/login',
+      URL,
       userDetails
     );
     const { token } = response.data;
-    // setAuthorization(token);
     localStorage.setItem('x-access-token', token);
     const user = jwtDecode(token);
     dispatch(setCurrentUser(user));
@@ -24,4 +23,4 @@ export const loginAction = userDetails => async dispatch => {
     console.error(error);
     return { status: 'error', error };
   }
-}
+};

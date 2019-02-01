@@ -424,6 +424,16 @@ h1 {
  button {
    cursor: pointer;
  }
+ button.form-btn {
+   color: white;
+   background: #5b0603;
+   width: 38%;
+ }
+ button.form-btn:disabled,
+ button.form-btn[disabled] {
+   background: lighten(#5b0603, 65%);
+   pointer-events: none;
+ }
  #cusine-category a {
    text-decoration: none;
    color: black
