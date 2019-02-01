@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import Header from "./Header.jsx";
-import IndexFooter from "./Footer";
 import Typing from "react-typing-animation";
+import Header from "./Header";
+import IndexFooter from "./Footer";
 
 const HomePage = () => {
   return (
@@ -12,7 +12,7 @@ const HomePage = () => {
         <div className="content">
           <h1>Fast Food App</h1>
           <div id="wel-div">
-            <Typing loop={true} cursorClassName="cursor fa fa-motorcycle">
+            <Typing loop cursorClassName="cursor fa fa-motorcycle">
               <p id="welcome-txt">
                 Welcome to Fast Food App
                 <Typing.Delay ms={1000} />

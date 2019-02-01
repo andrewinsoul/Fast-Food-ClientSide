@@ -51,7 +51,7 @@ class Login extends Component {
       } else {
         return this.setState(
           () => (
-            { loginError: 'Invalid email or password' })
+            { loginError: this.props.error })
         );
       }
     } catch (e) {
@@ -67,7 +67,7 @@ class Login extends Component {
     e.preventDefault();
     try {
       await this.props.authAction(
-        'http://localhost:8000/api/v1/auth/login',
+        '/auth/login',
         this.state
       );
       this.redirectUser();
@@ -131,14 +131,18 @@ class Login extends Component {
     );
   }
 }
-const mapStateToProps = (state) => ({
-  authenticated: state.authReducer.authenticated,
-  user: state.authReducer.user
-});
+const mapStateToProps = (state) => (
+  {
+    authenticated: state.authReducer.authenticated,
+    user: state.authReducer.user,
+    error: state.authReducer.error
+  }
+);
 Login.propTypes = {
   authAction: PropTypes.func.isRequired,
   history: PropTypes.object,
   authenticated: PropTypes.bool,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  error: PropTypes.string
 };
 export default connect(mapStateToProps, { authAction })(Login);

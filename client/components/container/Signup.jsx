@@ -33,6 +33,9 @@ class Signup extends Component {
       signupError: '',
       inValidForm: true
     };
+    this.loaderRef = React.createRef();
+    this.addressErrorRef = React.createRef();
+    this.usernameErrorRef = React.createRef();
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -78,18 +81,17 @@ class Signup extends Component {
    */
   async onSubmit(e) {
     e.preventDefault();
-    this.refs.loader.style.display = 'block';
+    this.loaderRef.style.display = 'block';
     try {
       const res = await this.props.authAction(
-        'http://localhost:8000/api/v1/auth/signup',
-        // 'https://fast-food-andy.herokuapp.com/api/v1/auth/signup',
+        '/auth/signup',
         this.state
       );
       if (res) {
-        this.refs.loader.style.display = 'none';
+        this.loaderRef.style.display = 'none';
         if (res.error) {
           this.setState({
-            signupError: res.error.response.data.error
+            signupError: this.props.error
           });
         } else {
           this.props.history.push('/order');
@@ -138,7 +140,6 @@ class Signup extends Component {
     const usernameRe = /^([a-z]{5,})$/;
     const phoneRe = /^([0-9]{11})$/;
     const addressRe = /^([\w\s-,.]{5,150})$/;
-    // console.log
     if (this.state[e.target.name]) {
       if (e.target.name === 'email' && (!emailRe.test(this.state.email))) {
         e.target.style.borderColor = 'red';
@@ -208,7 +209,10 @@ class Signup extends Component {
           <div className="form-jumbotron">
             <h3>Fast Food Fast SignUp</h3>
             <h5>Sign Up to Fast Food Fast</h5>
-            <div className="loader" ref="loader">
+            <div
+              className="loader"
+              ref={this.loaderRef}
+            >
             </div>
             <small
               className="error"
@@ -248,7 +252,7 @@ class Signup extends Component {
                 />
               </div>
               <small
-                ref="usernameError"
+                ref={this.usernameErrorRef}
                 className="error"
                 id="username-error">{this.state.usernameError}</small>
               <div className="reg-div">
@@ -314,7 +318,7 @@ class Signup extends Component {
                 </textarea>
               </div>
               <small
-                ref="addressError"
+                ref={this.addressErrorRef}
                 className="error"
                 id="address-error">{this.state.addressError}</small>
               <div>
@@ -339,10 +343,12 @@ class Signup extends Component {
 }
 const mapStateToProps = (state) => ({
   authenticated: state.authReducer.authenticated,
-  user: state.authReducer.user
+  user: state.authReducer.user,
+  error: state.authReducer.error
 });
 Signup.propTypes = {
   authAction: PropTypes.func.isRequired,
+  error: PropTypes.string,
   history: PropTypes.object,
   authenticated: PropTypes.bool,
   user: PropTypes.object.isRequired
