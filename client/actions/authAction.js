@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
-import axios from 'axios';
-import SET_CURRENT_USER from './types';
+import { Post } from '../utilities/apiCalls';
+import { SET_CURRENT_USER } from './types';
 
 const setCurrentUser = user => ({
   user,
@@ -8,12 +8,9 @@ const setCurrentUser = user => ({
   type: SET_CURRENT_USER,
 });
 
-export default (URL, userDetails) => async dispatch => {
+export default (endpoint, userDetails) => async dispatch => {
   try {
-    const response = await axios.post(
-      URL,
-      userDetails
-    );
+    const response = await Post(endpoint, userDetails);
     const { token } = response.data;
     localStorage.setItem('x-access-token', token);
     const user = jwtDecode(token);

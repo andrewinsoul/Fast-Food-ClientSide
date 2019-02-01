@@ -10,7 +10,7 @@
     "build": "webpack --mode production",
     "babel": "babel app.js -d build",
     "start:heroku": "node build/app.js",
-    "heroku-postuild": "npm run babel && npm run build"
+    "heroku-postbuild": "npm run babel && npm run build"
   },
   "repository": {
     "type": "git",

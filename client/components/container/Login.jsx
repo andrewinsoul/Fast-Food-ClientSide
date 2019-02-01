@@ -67,7 +67,7 @@ class Login extends Component {
     e.preventDefault();
     try {
       await this.props.authAction(
-        'http://localhost:8000/api/v1/auth/login',
+        '/auth/login',
         this.state
       );
       this.redirectUser();

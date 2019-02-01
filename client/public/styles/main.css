@@ -219,11 +219,17 @@ small {
   margin-bottom: 15px;
   color: white;
 }
+small.all-menu {
+  color: blcak;
+}
 .center-txt {
   text-align: center;
 }
 #end {
   display: flex;
+  margin-top: 10%;
+  border-top: 1px solid grey;
+  padding-top: 15px;
   justify-content: center;
 }
 .sub-content h2 {
@@ -414,11 +420,11 @@ h1 {
  .desc-p small {
    color: black;
  }
- .add-item-btn img{
+ .add-item-btn img, .remove-item-btn img{
     width: 23px;
     vertical-align: middle;
  }
- .add-item-btn {
+ .add-item-btn, .remove-item-btn {
    margin-bottom: 4px;
  }
  button {
@@ -946,6 +952,9 @@ td.accepted, td.declined {
     width: 15%;
     padding: 10px;
   }
+}
+.all-menu {
+  color: #000;
 }
 @media screen and (max-height: 368px) {
   #modal, #addModal {

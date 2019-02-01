@@ -33,6 +33,9 @@ class Signup extends Component {
       signupError: '',
       inValidForm: true
     };
+    this.loaderRef = React.createRef();
+    this.addressErrorRef = React.createRef();
+    this.usernameErrorRef = React.createRef();
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -78,15 +81,14 @@ class Signup extends Component {
    */
   async onSubmit(e) {
     e.preventDefault();
-    this.refs.loader.style.display = 'block';
+    this.loaderRef.style.display = 'block';
     try {
       const res = await this.props.authAction(
-        'http://localhost:8000/api/v1/auth/signup',
-        // 'https://fast-food-andy.herokuapp.com/api/v1/auth/signup',
+        '/auth/signup',
         this.state
       );
       if (res) {
-        this.refs.loader.style.display = 'none';
+        this.loaderRef.style.display = 'none';
         if (res.error) {
           this.setState({
             signupError: res.error.response.data.error
@@ -208,7 +210,10 @@ class Signup extends Component {
           <div className="form-jumbotron">
             <h3>Fast Food Fast SignUp</h3>
             <h5>Sign Up to Fast Food Fast</h5>
-            <div className="loader" ref="loader">
+            <div
+              className="loader"
+              ref={this.loaderRef}
+            >
             </div>
             <small
               className="error"
@@ -248,7 +253,7 @@ class Signup extends Component {
                 />
               </div>
               <small
-                ref="usernameError"
+                ref={this.usernameErrorRef}
                 className="error"
                 id="username-error">{this.state.usernameError}</small>
               <div className="reg-div">
@@ -314,7 +319,7 @@ class Signup extends Component {
                 </textarea>
               </div>
               <small
-                ref="addressError"
+                ref={this.addressErrorRef}
                 className="error"
                 id="address-error">{this.state.addressError}</small>
               <div>
