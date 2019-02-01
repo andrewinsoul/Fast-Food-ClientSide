@@ -16,6 +16,18 @@ class AllMenu extends Component {
    * @returns {null} - returns undefined
    * @description - check for token validity
    */
+  async componentWillMount() {
+    try {
+      await jwtDecode(localStorage.getItem("x-access-token"));
+    } catch (error) {
+      this.props.history.push("/login");
+    }
+  }
+
+  /**
+   * @param {null} - no argument required
+   * @returns {null} - returns nothing
+   */
   async componentDidMount() {
     await this.props.getMenuAction();
   }

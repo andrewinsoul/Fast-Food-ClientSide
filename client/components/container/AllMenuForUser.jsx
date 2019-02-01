@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { formatPrice } from "../../utilities/format";
 import { AddToCart, RemoveFromCart } from "../../actions/cartAction";
-
 /**
- * @class Menu
+ * @class AllMenuForUser
  * @description - class that displays all available menu to user
  */
-class Menu extends Component {
+class AllMenuForUser extends Component {
   /**
    *
    * @param {object} props - props object
@@ -78,7 +77,7 @@ class Menu extends Component {
   }
 }
 
-Menu.propTypes = {
+AllMenuForUser.propTypes = {
   price: PropTypes.number,
   foodId: PropTypes.number,
   food: PropTypes.string,
@@ -92,4 +91,4 @@ export default connect(
     AddToCart,
     RemoveFromCart
   }
-)(Menu);
+)(AllMenuForUser);

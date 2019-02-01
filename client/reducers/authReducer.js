@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from '../actions/types';
+import { SET_CURRENT_USER, SET_CURRENT_USER_FAIL } from '../actions/types';
 
 const prevState = {
   user: {},
@@ -11,11 +11,17 @@ const prevState = {
  * @param {*} action - object that has a type property
  * @returns {object} - returns new object after action dispatches
  */
-function authReducer(state = prevState, action) {
-  if (action.type === SET_CURRENT_USER) {
+export default (state = prevState, action) => {
+  switch (action.type) {
+  case SET_CURRENT_USER:
     return { ...state, user: action.user, authenticated: action.authenticated };
-  } else {
+  case SET_CURRENT_USER_FAIL:
+    return {
+      ...state,
+      authenticated: action.authenticated,
+      error: action.error
+    };
+  default:
     return state;
   }
-}
-export default authReducer;
+};

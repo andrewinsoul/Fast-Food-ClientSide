@@ -1,8 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import Header from "./Header.jsx";
-import IndexFooter from "./Footer";
 import Typing from "react-typing-animation";
+import Header from "./Header";
+import IndexFooter from "./Footer";
+import {
+  accountImg,
+  paymentImg,
+  cartImg,
+  deliverImg
+} from '../../public/images';
 
 const HomePage = () => {
   return (
@@ -12,7 +18,7 @@ const HomePage = () => {
         <div className="content">
           <h1>Fast Food App</h1>
           <div id="wel-div">
-            <Typing loop={true} cursorClassName="cursor fa fa-motorcycle">
+            <Typing loop cursorClassName="cursor fa fa-motorcycle">
               <p id="welcome-txt">
                 Welcome to Fast Food App
                 <Typing.Delay ms={1000} />
@@ -33,7 +39,7 @@ const HomePage = () => {
           <div id="aval-cusines">
             <div className="sh-left">
               <img
-                src="/images/create-account.png"
+                src={accountImg}
                 alt="create account image"
               />
               <b>Create an Account</b>
@@ -50,14 +56,14 @@ const HomePage = () => {
               </p>
             </div>
             <div className="sh-left">
-              <img src="/images/shopping-cart.png" alt="cart image" />
+              <img src={cartImg} alt="cart image" />
               <b>Populate Cart</b>
               <p>
                 Select from our list of menu your choice and populate your cart
               </p>
             </div>
             <div className="sh-left sh-right">
-              <img src="/images/deliver.png" alt="delivery image" />
+              <img src={deliverImg} alt="delivery image" />
               <b>Receive Orders</b>
               <p>
                 We ensure you get your orders accurately within the shortest
@@ -65,7 +71,7 @@ const HomePage = () => {
               </p>
             </div>
             <div className="sh-right">
-              <img src="./images/payments.png" alt="make payments image" />
+              <img src={paymentImg} alt="make payments image" />
               <b>Make Payment</b>
               <p>
                 Make payment as soon as you receive orders and you assert it's

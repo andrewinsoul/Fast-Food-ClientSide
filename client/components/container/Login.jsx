@@ -24,6 +24,7 @@ class Login extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.redirectUser = this.redirectUser.bind(this);
+    this.loaderRef = React.createRef();
   }
 
   /**
@@ -51,7 +52,7 @@ class Login extends Component {
       } else {
         return this.setState(
           () => (
-            { loginError: 'Invalid email or password' })
+            { loginError: this.props.error })
         );
       }
     } catch (e) {
@@ -65,11 +66,13 @@ class Login extends Component {
    */
   async onSubmit(e) {
     e.preventDefault();
+    this.loaderRef.current.style.display = 'block';
     try {
       await this.props.authAction(
         '/auth/login',
         this.state
       );
+      this.loaderRef.current.style.display = 'none';
       this.redirectUser();
     } catch (error) {
       console.error(error);
@@ -88,7 +91,7 @@ class Login extends Component {
           <div className="form-jumbotron">
             <h3>Fast Food App Login</h3>
             <h5>Enter your login details</h5>
-            <div className="loader"></div>
+            <div className="loader" ref={this.loaderRef}></div>
             <span style={{ color: "red" }}>{this.state.loginError}</span>
             <div>
               <b><span className="error-span"></span></b>
@@ -131,14 +134,18 @@ class Login extends Component {
     );
   }
 }
-const mapStateToProps = (state) => ({
-  authenticated: state.authReducer.authenticated,
-  user: state.authReducer.user
-});
+const mapStateToProps = (state) => (
+  {
+    authenticated: state.authReducer.authenticated,
+    user: state.authReducer.user,
+    error: state.authReducer.error
+  }
+);
 Login.propTypes = {
   authAction: PropTypes.func.isRequired,
   history: PropTypes.object,
   authenticated: PropTypes.bool,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  error: PropTypes.string
 };
 export default connect(mapStateToProps, { authAction })(Login);

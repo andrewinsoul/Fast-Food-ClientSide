@@ -34,8 +34,8 @@ class Signup extends Component {
       inValidForm: true
     };
     this.loaderRef = React.createRef();
-    // this.addressErrorRef = React.createRef();
-    // this.usernameErrorRef = React.createRef();
+    this.addressErrorRef = React.createRef();
+    this.usernameErrorRef = React.createRef();
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -91,7 +91,7 @@ class Signup extends Component {
         this.loaderRef.current.style.display = 'none';
         if (res.error) {
           this.setState({
-            signupError: res.error.response.data.error
+            signupError: this.props.error
           });
         } else {
           this.props.history.push('/order');
@@ -140,7 +140,6 @@ class Signup extends Component {
     const usernameRe = /^([a-z]{5,})$/;
     const phoneRe = /^([0-9]{11})$/;
     const addressRe = /^([\w\s-,.]{5,150})$/;
-    // console.log
     if (this.state[e.target.name]) {
       if (e.target.name === 'email' && (!emailRe.test(this.state.email))) {
         e.target.style.borderColor = 'red';
@@ -344,10 +343,12 @@ class Signup extends Component {
 }
 const mapStateToProps = (state) => ({
   authenticated: state.authReducer.authenticated,
-  user: state.authReducer.user
+  user: state.authReducer.user,
+  error: state.authReducer.error
 });
 Signup.propTypes = {
   authAction: PropTypes.func.isRequired,
+  error: PropTypes.string,
   history: PropTypes.object,
   authenticated: PropTypes.bool,
   user: PropTypes.object.isRequired

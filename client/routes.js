@@ -5,8 +5,8 @@ import Login from "./components/container/Login";
 import Signup from "./components/container/Signup";
 import AllMenu from "./components/container/AllMenu";
 import RecentOrder from "./components/container/RecentOrder";
-import AdminUser from "./components/container/AdminUser";
 import PrivateRoute from "./PrivateRoute";
+import AdminUser from "./components/container/AdminUser";
 
 const Routes = () => (
   <BrowserRouter>
@@ -16,6 +16,7 @@ const Routes = () => (
         <Route path="/login" component={Login} exact />
         <Route path="/signup" component={Signup} exact />
         <PrivateRoute path="/order" component={AllMenu} exact />
+        <Route path="/order" component={AllMenu} exact />
         <Route path="/recent" component={RecentOrder} exact />
         <Route path="/admin" component={AdminUser} exact />
       </Switch>
