@@ -11,11 +11,11 @@ const setCurrentUser = user => ({
 export default (endpoint, userDetails) => async dispatch => {
   try {
     const response = await Post(endpoint, userDetails);
-    const { token } = response.data;
+    const { token } = response;
     localStorage.setItem('x-access-token', token);
     const user = jwtDecode(token);
     dispatch(setCurrentUser(user));
-    return { status: 'success', message: response.data.message };
+    return { status: 'success', message: response.message };
   } catch (error) {
     console.error(error);
     return { status: 'error', error };

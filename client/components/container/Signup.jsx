@@ -34,8 +34,8 @@ class Signup extends Component {
       inValidForm: true
     };
     this.loaderRef = React.createRef();
-    this.addressErrorRef = React.createRef();
-    this.usernameErrorRef = React.createRef();
+    // this.addressErrorRef = React.createRef();
+    // this.usernameErrorRef = React.createRef();
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -81,14 +81,14 @@ class Signup extends Component {
    */
   async onSubmit(e) {
     e.preventDefault();
-    this.loaderRef.style.display = 'block';
+    this.loaderRef.current.style.display = 'block';
     try {
       const res = await this.props.authAction(
         '/auth/signup',
         this.state
       );
       if (res) {
-        this.loaderRef.style.display = 'none';
+        this.loaderRef.current.style.display = 'none';
         if (res.error) {
           this.setState({
             signupError: res.error.response.data.error
