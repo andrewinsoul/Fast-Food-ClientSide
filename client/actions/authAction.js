@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
-import SET_CURRENT_USER from './types';
+import { SET_CURRENT_USER } from './types';
 
 const setCurrentUser = user => ({
   user,
