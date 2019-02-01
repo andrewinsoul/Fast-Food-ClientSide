@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: [
@@ -31,35 +30,15 @@ module.exports = {
       },
       {
         test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: 'url-loader?limit=10000',
+        use: 'url-loader?limit=25000',
       },
       {
         test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
         use: 'file-loader',
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: [
-          'file-loader?name=/public/images/[name].[ext]',
-          {
-            loader: 'url-loader',
-            query: {
-              mozjpeg: {
-                progressive: true,
-              },
-              gifsicle: {
-                interlaced: false,
-              },
-              optipng: {
-                optimizationLevel: 4,
-              },
-              pngquant: {
-                quality: '75-90',
-                speed: 3,
-              },
-            },
-          }
-        ],
+        test: /\.(jpe?g|png|gif|svg|ico)$/i,
+        loader: 'url-loader?limit=25000',
         exclude: /node_modules/,
         include: __dirname,
       }
@@ -69,10 +48,9 @@ module.exports = {
     new HtmlwebpackPlugin({
       template: './index.html'
     }),
-    new Dotenv()
   ],
-  resolve: { extensions: ["*", ".js", ".jsx"] },
-  devtool: 'cheap-module-source-map',
+  resolve: { extensions: ["*", ".js", ".jsx", ".ico", "jpg", ".png"] },
+  // devtool: 'cheap-module-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'client/public'),
     historyApiFallback: true

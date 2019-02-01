@@ -2,13 +2,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import toggler from '../../../utils/toggler';
 import logoutUser from '../../../utils/logout';
+import { brandImg } from '../../../public/images';
 
 const Header = () => (
   <div id="img-cover">
     <div id="dim-img">
       <nav className="topnav" id="Topnav">
         <div id="brand-div">
-          <img className="nav-brand" src="/images/images.jpg" />
+          <img className="nav-brand" src={brandImg} />
           <h1>Fast Food App</h1>
         </div>
         <div id="nav-links">
