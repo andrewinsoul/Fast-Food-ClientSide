@@ -1,10 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import toggler from '../../utils/toggler';
-import { brandImg } from '../../public/images';
+import { brandImg, backgroundImg } from '../../public/images';
 
 const Header = () => (
-  <div id="img-cover">
+  <div
+    id="img-cover"
+    style={{
+      background: `url(${backgroundImg}) no-repeat fixed`,
+      backgroundSize: 'cover'
+    }}
+  >
     <div id="dim-img">
       <nav className="topnav" id="Topnav">
         <div id="brand-div">

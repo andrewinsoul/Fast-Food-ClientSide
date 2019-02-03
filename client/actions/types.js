@@ -8,3 +8,5 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const PLACE_ORDER = 'PLACE_ORDER';
 export const ADD_QTY = 'ADD_QTY';
 export const SUBTRACT_QTY = 'SUBTRACT_QTY';
+export const CLEAR_CART = 'CLEAR_CART';
+export const HANDLE_EMPTY_CART = 'HANDLE_EMPTY_CART';

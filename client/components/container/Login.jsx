@@ -56,7 +56,7 @@ class Login extends Component {
         );
       }
     } catch (e) {
-      console.log(e.message);
+      console.error(e);
     }
   }
 

@@ -181,6 +181,9 @@ footer img {
 .form-jumbotron h5 {
   margin-top: 0;
 }
+#place-order-res {
+  display: none;
+}
 .index-footer {
   border-top: 1px solid grey;
   margin-top: 3%;
@@ -243,10 +246,6 @@ img.nav-brand {
 }
 .fa {
   font-size: 303px;
-}
-#img-cover {
-  background: url(/images/background-img.jpg) no-repeat fixed;
-  background-size: cover;
 }
 button.icon {
   cursor: pointer;
@@ -380,7 +379,7 @@ h1 {
  }
  #menu-items, .menu-items {
   display: flex; 
-  flex-direction: column; 
+  flex-direction: column;
  }
  #menu-cart-cat-container {
    display: flex;
