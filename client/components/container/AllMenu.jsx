@@ -12,6 +12,18 @@ import Cart from './Cart';
  */
 class AllMenu extends Component {
   /**
+   *
+   * @param {object} props - props object
+   */
+  constructor(props) {
+    super(props);
+    this.loaderRef = React.createRef();
+    this.state = {
+      orderPlaced: false
+    };
+  }
+
+  /**
    * @param {null} - returns null
    * @returns {null} - returns undefined
    * @description - check for token validity
@@ -29,7 +41,21 @@ class AllMenu extends Component {
    * @returns {null} - returns nothing
    */
   async componentDidMount() {
-    await this.props.getMenuAction();
+    try {
+      this.loaderRef.current.style.display = 'block';
+      await this.props.getMenuAction();
+      this.loaderRef.current.style.display = 'none';
+    } catch (e) {
+      console.warn('');
+    }
+  }
+
+  /**
+   * @param {null} - no argument required
+   * @returns {null} - returns nothing
+   */
+  reloadComponent = () => {
+    this.setState({ orderPlaced: true });
   }
 
   /**
@@ -45,6 +71,8 @@ class AllMenu extends Component {
         food={item.food}
         category={item.category}
         price={item.price}
+        reload = {this.reloadComponent}
+        orderPlaced = {this.state.orderPlaced}
       />
     ));
     return (
@@ -55,7 +83,7 @@ class AllMenu extends Component {
             <div id="cusine-category" className="food-div">
               <h3 className="pad-left center-txt">Cusine Category</h3>
               <div className="col-grey pad-left space-down">
-                <a href="#">All</a>
+                <a style={{ color: 'green' }} href="#">All</a>
               </div>
               <div className="col-grey pad-left space-down">
                 <a href="#african">African</a>
@@ -84,10 +112,16 @@ class AllMenu extends Component {
               <div id="spacer-div"></div>
               <div id="menu-items">
                 <h3 className="center-txt">Menu</h3>
+                <div style={
+                  {
+                    marginLeft: '48%',
+                    marginBottom: '5%'
+                  }
+                } className="loader" ref={this.loaderRef}/>
                 {AllMenuComponents}
               </div>
             </div>
-            <Cart />
+            <Cart reload={this.reloadComponent}/>
           </div>
         </main>
         <footer>

@@ -2,14 +2,14 @@ import jwtDecode from 'jwt-decode';
 import { Post } from '../utilities/apiCalls';
 import { SET_CURRENT_USER, SET_CURRENT_USER_FAIL } from './types';
 
-const setCurrentUser = user => ({
+export const setCurrentUser = user => ({
   user,
   authenticated: true,
   type: SET_CURRENT_USER,
 });
 
 
-const setCurrentUserFail = error => ({
+export const setCurrentUserFail = error => ({
   authenticated: false,
   type: SET_CURRENT_USER_FAIL,
   error

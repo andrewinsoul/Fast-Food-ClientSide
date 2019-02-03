@@ -1,7 +1,7 @@
 import { GET_ALL_MENU } from './types';
 import { Get } from '../utilities/apiCalls';
 
-const getAllMenu = menu => ({
+export const getAllMenu = menu => ({
   authenticated: true,
   menu,
   type: GET_ALL_MENU
@@ -13,5 +13,6 @@ export default () => async dispatch => {
     return { status: 'success' };
   } catch (error) {
     Promise.reject(error);
+    return { status: 'error' };
   }
 };
