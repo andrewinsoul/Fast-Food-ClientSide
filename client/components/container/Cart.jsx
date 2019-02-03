@@ -5,6 +5,7 @@ import { formatPrice } from '../../utilities/format';
 import { AddQty, SubtractQty, PlaceOrder } from '../../actions/cartAction';
 
 /**
+ * @class Cart
  * @description represents the cart component
  */
 class Cart extends Component {
@@ -17,6 +18,24 @@ class Cart extends Component {
     this.state = {
       quantity: 1,
     };
+    this.loaderRef = React.createRef();
+    this.PlaceOrderRes = React.createRef();
+  }
+
+  checkOut = async () => {
+    this.loaderRef.current.style.display = 'block';
+    document.getElementById('app').style.pointerEvents = 'none';
+    await this.props.PlaceOrder(this.props.cart);
+    this.loaderRef.current.style.display = 'none';
+    this.PlaceOrderRes.current.style.display = 'block';
+    if (this.props.cart.length === 0) {
+      this.PlaceOrderRes.current.style.color = 'red';
+    } else {
+      this.PlaceOrderRes.current.style.color = 'green';
+      await setTimeout(() => window.location.reload(), 2000);
+    }
+    await setTimeout(() => (this.PlaceOrderRes.current.style.display = 'none'), 2000);
+    document.getElementById('app').style.pointerEvents = 'auto';
   }
 
   /**
@@ -26,7 +45,7 @@ class Cart extends Component {
   render() {
     let cartItems;
     let total = 0;
-    if (this.props.cart.length > 0) {
+    if (this.props.cart.length > 0 && typeof (this.props.cart) !== 'string') {
       cartItems = this.props.cart.map((item, index) => (
         <div className="bottom-line" key={index}>
           <div className="flexblock">
@@ -65,6 +84,16 @@ class Cart extends Component {
     }
     return (
       <div id="cart" className="food-div">
+        <h5 ref={this.PlaceOrderRes}
+          id="place-order-res"
+          style={{ marginLeft: "20%" }}
+        >
+          {
+            this.props.cart.length === 0 ?
+              'cannot place order on an empty cart' :
+              'order successfully placed'
+          }
+        </h5>
         <div className="cart-section">
           <div className="menu-items">
             <h3 className="center-txt">Your Cart</h3>
@@ -72,9 +101,21 @@ class Cart extends Component {
           </div>
           <button style={{ fontSize: '20px' }}
             id="place-order"
-            onClick={() => this.props.PlaceOrder(this.props.cart)}
+            onClick={() => this.checkOut()}
           >
             {`Place Order ${formatPrice(total)}`}
+            <div
+              style=
+                {
+                  {
+                    color: 'yellow',
+                    width: '10px',
+                    height: '10px',
+                    marginTop: '2%',
+                    marginLeft: '50%'
+                  }
+                } className="loader" ref={this.loaderRef}
+            />
           </button>
         </div>
       </div>
@@ -89,7 +130,7 @@ const mapStateToProps = state => ({
 Cart.propTypes = {
   SubtractQty: PropTypes.func,
   AddQty: PropTypes.func,
-  cart: PropTypes.array
+  PlaceOrder: PropTypes.func
 };
 export default connect(
   mapStateToProps,

@@ -4,6 +4,7 @@ import {
   PLACE_ORDER,
   ADD_QTY,
   SUBTRACT_QTY,
+  HANDLE_EMPTY_CART,
 } from './types';
 import { Post } from '../utilities/apiCalls';
 
@@ -30,6 +31,11 @@ const addQty = foodId => ({
 const subtractQty = foodId => ({
   type: SUBTRACT_QTY,
   foodId
+});
+
+const handleEmptyCart = () => ({
+  type: HANDLE_EMPTY_CART,
+  res: []
 });
 
 export const AddToCart = foodItem => dispatch => {
@@ -73,10 +79,17 @@ export const RemoveFromCart = (foodId) => dispatch => {
 
 export const PlaceOrder = orders => async dispatch => {
   try {
-    const res = await Post('/orders', orders);
-    console.log('ORDER PLACED =====> ', res);
+    if (orders.length === 0) {
+      dispatch(handleEmptyCart());
+      return {
+        success: false,
+        error: 'please fill cart, cannot place order on empty cart'
+      };
+    }
+    const newOrder = orders.map(item => ({ ...item, foodId: item.id }));
+    const res = await Post('/orders', { orders: newOrder });
     if (res.status === 'success') {
-      dispatch(placeOrder(res.orders));
+      dispatch(placeOrder(orders));
       return {
         success: true,
         totalAmount: res.SUMTOTAL,
