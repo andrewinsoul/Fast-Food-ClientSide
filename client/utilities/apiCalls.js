@@ -1,55 +1,37 @@
 /* eslint-env browser */
 
-import axios from 'axios';
+import axios from "axios";
 
-export const mainUrl = 'https://fast-food-andy.herokuapp.com/api/v1';
-const request = axios.create({
+export const mainUrl = "https://fast-food-andy.herokuapp.com/api/v1";
+export const request = axios.create({
   mainUrl,
   headers: {
-    'Content-Type': 'application/json',
-    'x-access-token': window.localStorage.getItem('x-access-token')
+    "Content-Type": "application/json",
+    "x-access-token": window.localStorage.getItem("x-access-token")
   },
-  credentials: 'omit'
+  credentials: "omit"
 });
 
 request.interceptors.request.use(
-  (config) => {
-    config.headers['x-access-token'] = localStorage.getItem('x-access-token');
+  config => {
+    config.headers["x-access-token"] = localStorage.getItem("x-access-token");
     return config;
   },
   error => Promise.reject(error)
 );
 
-export const Get = async (endpoint) => {
+export const Get = async endpoint => {
   try {
     const response = await request.get(`${mainUrl}${endpoint}`);
     return response.data;
   } catch (error) {
-    return error.response ? error.response.data : error;
+    return error.response;
   }
 };
 
 export const Post = async (endpoint, data) => {
   try {
     const response = await request.post(`${mainUrl}${endpoint}`, data);
-    return response.data;
-  } catch (error) {
-    return error.response ? error.response.data : error;
-  }
-};
-
-export const Put = async (endpoint, data) => {
-  try {
-    const response = await request.put(`${mainUrl}${endpoint}`, data);
-    return response.data;
-  } catch (error) {
-    return error.response ? error.response.data : error;
-  }
-};
-
-export const Delete = async (endpoint, data) => {
-  try {
-    const response = await request.delete(`${mainUrl}${endpoint}`, data);
     return response.data;
   } catch (error) {
     return error.response.data;

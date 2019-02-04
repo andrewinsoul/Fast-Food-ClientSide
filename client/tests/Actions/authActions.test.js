@@ -1,6 +1,5 @@
 import ConfigureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import sinon from "sinon";
 import * as types from "../../actions/types";
 import * as authActions from "../../actions/authAction";
 import * as apiRequests from "../../utilities/apiCalls";
@@ -27,7 +26,12 @@ describe("unit test for the action signup creator", () => {
       expect(authActions.setCurrentUser(user)).toEqual(expectedActionType);
     });
   it("should complete user signup registration", async () => {
-    const stubPostMethod = sinon.stub(apiRequests, "Post").resolves(user);
+    jest.spyOn(apiRequests.request, 'post').mockImplementation(() => ({
+      data: {
+        authenticated: true,
+        user
+      }
+    }));
     const store = mockStore({ user: {} });
     await store.dispatch(authActions.setCurrentUser(user));
     expect(store.getActions()).toEqual([
@@ -42,7 +46,6 @@ describe("unit test for the action signup creator", () => {
         type: "SET_CURRENT_USER"
       }
     ]);
-    stubPostMethod.restore();
   });
   it("should ensure the necessary actions was dispatched on user signup failure",
     () => {
@@ -54,4 +57,9 @@ describe("unit test for the action signup creator", () => {
       expect(authActions.setCurrentUserFail('An error occured'))
         .toEqual(expectedAction);
     });
+  it('should test the error block when setting a user', () => {
+    jest.spyOn(authActions, 'default').mockImplementation(() => (
+      Promise.reject('error')
+    ));
+  });
 });

@@ -1,23 +1,19 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import moxios from "moxios";
-import sinon from "sinon";
 import * as cartActions from "../../actions/cartAction";
 import * as types from "../../actions/types";
 import * as apiRequests from "../../utilities/apiCalls";
-import axios from 'axios';
+import menuList from "../mocks/getMenuMock";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-jest.setTimeout(30000);
+const orders = [{
+  food: 'Burger & Pepsi',
+  quantity: 1,
+  description: 'desc'
+}];
 
 describe("test for actions related to cart", () => {
-  beforeEach(() => {
-    moxios.install();
-  });
-  afterEach(() => {
-    moxios.uninstall();
-  });
   it("dispatches ADD_TO_CART action", async () => {
     const expectedAction = [
       {
@@ -51,6 +47,16 @@ describe("test for actions related to cart", () => {
     await store.dispatch(cartActions.AddQty(2));
     expect(store.getActions()).toEqual(expectedAction);
   });
+  it('should test for error while dispatching the remove from cart action', () => {
+    const store = mockStore({ cart: {} });
+    const mockFn = jest.spyOn(store, 'dispatch').mockImplementation(() => Promise.reject(Error('error')));
+    store.dispatch(cartActions.RemoveFromCart);
+    store.dispatch(cartActions.SubtractQty);
+    store.dispatch(cartActions.AddQty);
+    store.dispatch(cartActions.AddToCart);
+    store.dispatch(cartActions.PlaceOrder);
+    mockFn.mockReturnValue('error');
+  });
   it("dispatches SUBTRACT_QTY action", async () => {
     const expectedAction = [
       {
@@ -62,17 +68,25 @@ describe("test for actions related to cart", () => {
     await store.dispatch(cartActions.SubtractQty(1));
     expect(store.getActions()).toEqual(expectedAction);
   });
-  it("dispatches PLACE_ORER action", async () => {
-    const dispatch = jest.fn();
-    jest.spyOn(
-      apiRequests.Post, ('/orders', [])
-    ).mockImplementation(() => Promise.resolve({ status: 201 }));
-    const response = { data: { message: "placed" } };
-    // jest
-    //   .spyOn(axios, 'post')
-    //   .mockImplementation(() => Promise.resolve({ status: 201 }));
-    await cartActions.PlaceOrder([1, 2])(dispatch);
-    expect(dispatch.mock.calls[1]).toEqual({ type: "PLACE_ORDER" });
-    expect(dispatch).toHaveBeenCalledTimes(3);
+  it("dispatches PLACE_ORDER action", async () => {
+    jest.spyOn(apiRequests.request, 'post').mockImplementation(() => ({
+      data: {
+        orders,
+        status: 'success'
+      }
+    }));
+    const expectedAction = [
+      { type: types.PLACE_ORDER, orders }
+    ];
+    const store = mockStore({ menu: menuList, orders });
+    await store.dispatch(cartActions.PlaceOrder(orders));
+    expect(store.getActions()).toEqual(expectedAction);
+  });
+  it('checks for the error block of post method', async () => {
+    jest.spyOn(apiRequests.request, 'post').mockImplementation(() => (
+      Promise.reject({ data: 'error' })
+    ));
+    const store = mockStore({ menu: menuList, orders });
+    await store.dispatch(cartActions.PlaceOrder(orders));
   });
 });

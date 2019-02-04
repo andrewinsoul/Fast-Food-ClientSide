@@ -46,6 +46,7 @@ export const AddToCart = foodItem => dispatch => {
     });
   } catch (error) {
     Promise.reject(error);
+    return 'error';
   }
 };
 
@@ -54,6 +55,7 @@ export const AddQty = foodId => dispatch => {
     dispatch(addQty(foodId));
   } catch (error) {
     Promise.reject(error);
+    return 'error';
   }
 };
 
@@ -62,6 +64,7 @@ export const SubtractQty = foodId => dispatch => {
     dispatch(subtractQty(foodId));
   } catch (error) {
     Promise.reject(error);
+    return 'error';
   }
 };
 
@@ -74,6 +77,7 @@ export const RemoveFromCart = (foodId) => dispatch => {
     });
   } catch (error) {
     Promise.reject(error);
+    return 'error';
   }
 };
 
@@ -98,5 +102,6 @@ export const PlaceOrder = orders => async dispatch => {
     }
   } catch (error) {
     Promise.reject(error);
+    return 'error';
   }
 };

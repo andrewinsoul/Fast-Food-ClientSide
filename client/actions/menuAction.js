@@ -1,5 +1,5 @@
-import { GET_ALL_MENU } from './types';
-import { Get } from '../utilities/apiCalls';
+import { GET_ALL_MENU } from "./types";
+import { Get } from "../utilities/apiCalls";
 
 export const getAllMenu = menu => ({
   authenticated: true,
@@ -8,11 +8,11 @@ export const getAllMenu = menu => ({
 });
 export default () => async dispatch => {
   try {
-    const res = await Get('/menu');
+    const res = await Get("/menu");
     dispatch(getAllMenu(res.menuList));
-    return { status: 'success' };
+    return { status: "success" };
   } catch (error) {
     Promise.reject(error);
-    return { status: 'error' };
+    return { status: "error" };
   }
 };
