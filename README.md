@@ -1,6 +1,8 @@
 ### Fast Food Client Side
-This project uses React to consume the Fast-Food-API backend which is available on: https://fast-food-andy.herokuapp.com/api/v1/api-docs/
+[![Build Status](https://travis-ci.org/andrewinsoul/Fast-Food-ClientSide.svg?branch=ch-write-tests--163654772)](https://travis-ci.org/andrewinsoul/Fast-Food-ClientSide)
+[![Coverage Status](https://coveralls.io/repos/github/andrewinsoul/Fast-Food-ClientSide/badge.svg?branch=ch-write-tests--163654772)](https://coveralls.io/github/andrewinsoul/Fast-Food-ClientSide?branch=ch-write-tests--163654772)
 
+This project uses React to consume the Fast-Food-API backend which is available on: https://fast-food-andy.herokuapp.com/api/v1/api-docs/
 #### GETTING STARTED
 Read on belowm to see what you need to run the application and make contributions to it's progress.
 
@@ -28,3 +30,6 @@ To contribute to this project
 - Ensure nothing is breaking before raising a pull request
 - Raise a pull request
 <h3>Your contributions are welcome</h3>
+
+#### CREDITS
+*Andela SIMS Programme*
