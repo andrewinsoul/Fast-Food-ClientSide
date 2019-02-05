@@ -4,13 +4,27 @@
   "description": "This project uses React to consume an fast-food API",
   "main": "app.js",
   "scripts": {
-    "test": "Echo none",
+    "test": "jest --detectOpenHandles --coverage",
+    "test:watch": "jest --watch --coverage",
+    "coverage": "jest --colors --coverage && cat ./coverage/lcov.info | coveralls",
     "lint": "./node_modules/eslint/bin/eslint.js  client/*.jsx",
     "start": "webpack-dev-server --mode development --hot --open",
     "build": "webpack --mode production",
     "babel": "babel app.js -d build",
     "start:heroku": "node build/app.js",
     "heroku-postbuild": "npm run babel && npm run build"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "./client/tests/setupTests.js"
+    ],
+    "moduleNameMapper": {
+      ".+\\.(png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    }
   },
   "repository": {
     "type": "git",
@@ -53,22 +67,41 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.14"
   },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
+  },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
+    "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/polyfill": "^7.2.5",
-    "redux-devtools-extension": "^2.13.7",
-    "redux-logger": "^3.0.6",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "babel-preset-stage-2": "^6.24.1",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
+    "enzyme-to-json": "^3.3.5",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.12.3"
+    "eslint-plugin-react": "^7.12.3",
+    "fetch-mock": "^7.3.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.0.0",
+    "jest-css-modules": "^1.1.0",
+    "jest-css-modules-transform": "^2.1.1",
+    "jest-transform-stub": "^1.0.0",
+    "moxios": "^0.4.0",
+    "redux-devtools-extension": "^2.13.7",
+    "redux-logger": "^3.0.6",
+    "redux-mock-store": "^1.5.3",
+    "sinon": "^7.2.3"
   }
 }
