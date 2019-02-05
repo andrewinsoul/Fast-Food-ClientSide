@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { formatPrice } from "../../utilities/format";
 import { AddToCart, RemoveFromCart } from "../../actions/cartAction";
+import { addImg, removeImg } from "../../public/images";
 
 /**
  * @class Menu
@@ -51,7 +52,7 @@ class Menu extends Component {
                   }}
                   className="pad-right remove-item-btn"
                 >
-                  <img src="./images/remove-img.png" />
+                  <img src={removeImg} />
                 </button>
               ) : (
                 <button
@@ -67,7 +68,7 @@ class Menu extends Component {
                     this.setState({ isAdded: true });
                   }}
                 >
-                  <img src="./images/add-img.png" />
+                  <img src={addImg} />
                 </button>
               )}
             </div>
