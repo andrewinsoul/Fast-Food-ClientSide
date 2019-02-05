@@ -247,10 +247,6 @@ img.nav-brand {
 .fa {
   font-size: 303px;
 }
-#img-cover {
-  background: url(/images/background-img.jpg) no-repeat fixed;
-  background-size: cover;
-}
 button.icon {
   cursor: pointer;
   display: none;
