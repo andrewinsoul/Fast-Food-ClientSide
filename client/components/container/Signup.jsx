@@ -1,12 +1,12 @@
 /* eslint-disable class-methods-use-this */
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import Header from '../presentational/Header';
-import authAction from '../../actions/authAction';
-import IndexFooter from '../presentational/Footer';
-
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import Header from "../presentational/Header";
+import authAction from "../../actions/authAction";
+import IndexFooter from "../presentational/Footer";
+import { backgroundImg } from "../../public/images";
 /**
  * @description - class that displays sign up component
  */
@@ -18,19 +18,19 @@ class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      emailError: '',
-      username: '',
-      usernameError: '',
-      phone: '',
-      phoneError: '',
-      password: '',
-      passwordError: '',
-      confirm: '',
-      confirmError: '',
-      address: '',
-      addressError: '',
-      signupError: '',
+      email: "",
+      emailError: "",
+      username: "",
+      usernameError: "",
+      phone: "",
+      phoneError: "",
+      password: "",
+      passwordError: "",
+      confirm: "",
+      confirmError: "",
+      address: "",
+      addressError: "",
+      signupError: "",
       inValidForm: true
     };
     this.loaderRef = React.createRef();
@@ -61,7 +61,7 @@ class Signup extends Component {
       usernameRe.test(this.state.username) &&
       phoneRe.test(this.state.phone) &&
       (this.state.password.length >= 8 &&
-      this.state.password === this.state.confirm) &&
+        this.state.password === this.state.confirm) &&
       addressRe.test(this.state.address)
     ) {
       this.setState({
@@ -81,20 +81,17 @@ class Signup extends Component {
    */
   async onSubmit(e) {
     e.preventDefault();
-    this.loaderRef.current.style.display = 'block';
+    this.loaderRef.current.style.display = "block";
     try {
-      const res = await this.props.authAction(
-        '/auth/signup',
-        this.state
-      );
+      const res = await this.props.authAction("/auth/signup", this.state);
       if (res) {
-        this.loaderRef.current.style.display = 'none';
+        this.loaderRef.current.style.display = "none";
         if (res.error) {
           this.setState({
             signupError: this.props.error
           });
         } else {
-          this.props.history.push('/order');
+          this.props.history.push("/order");
         }
       }
     } catch (error) {
@@ -109,24 +106,24 @@ class Signup extends Component {
    * @returns {null} - returns null value
    */
   onFocus(e) {
-    if (e.target.name === 'email') {
-      this.setState({ emailError: '' });
-      e.target.style.borderColor = '';
-    } else if (e.target.name === 'username') {
-      this.setState({ usernameError: '' });
-      e.target.style.borderColor = '';
-    } else if (e.target.name === 'phone') {
-      this.setState({ phoneError: '' });
-      e.target.style.borderColor = '';
-    } else if (e.target.name === 'password') {
-      this.setState({ passwordError: '' });
-      e.target.style.borderColor = '';
-    } else if (e.target.name === 'confirm') {
-      this.setState({ confirmError: '' });
-      e.target.style.borderColor = '';
-    } else if (e.target.name === 'address') {
-      e.target.style.borderColor = '';
-      this.setState({ addressError: '' });
+    if (e.target.name === "email") {
+      this.setState({ emailError: "" });
+      e.target.style.borderColor = "";
+    } else if (e.target.name === "username") {
+      this.setState({ usernameError: "" });
+      e.target.style.borderColor = "";
+    } else if (e.target.name === "phone") {
+      this.setState({ phoneError: "" });
+      e.target.style.borderColor = "";
+    } else if (e.target.name === "password") {
+      this.setState({ passwordError: "" });
+      e.target.style.borderColor = "";
+    } else if (e.target.name === "confirm") {
+      this.setState({ confirmError: "" });
+      e.target.style.borderColor = "";
+    } else if (e.target.name === "address") {
+      e.target.style.borderColor = "";
+      this.setState({ addressError: "" });
     }
   }
 
@@ -141,58 +138,60 @@ class Signup extends Component {
     const phoneRe = /^([0-9]{11})$/;
     const addressRe = /^([\w\s-,.]{5,150})$/;
     if (this.state[e.target.name]) {
-      if (e.target.name === 'email' && (!emailRe.test(this.state.email))) {
-        e.target.style.borderColor = 'red';
-        this.setState({ emailError: 'invalid email format' });
+      if (e.target.name === "email" && !emailRe.test(this.state.email)) {
+        e.target.style.borderColor = "red";
+        this.setState({ emailError: "invalid email format" });
       }
       if (
-        e.target.name === 'username' && !usernameRe.test(this.state.username)) {
-        e.target.style.borderColor = 'red';
-        this.setState(
-          { usernameError: 'username should be at least 5 letters long' }
-        );
-      }
-      if (e.target.name === 'phone' && !phoneRe.test(this.state.phone)) {
-        e.target.style.borderColor = 'red';
-        this.setState({ phoneError: 'Enter a valid number' });
-      }
-      if (e.target.name === 'password' && this.state.password.length < 8) {
-        e.target.style.borderColor = 'red';
-        this.setState(
-          { passwordError: 'password must be at least 8 characters long' }
-        );
-      }
-      if (e.target.name === 'confirm' &&
-        e.target.value !== this.state.password) {
-        e.target.style.borderColor = 'red';
+        e.target.name === "username" &&
+        !usernameRe.test(this.state.username)
+      ) {
+        e.target.style.borderColor = "red";
         this.setState({
-          confirmError: 'password do not match'
+          usernameError: "username should be at least 5 letters long"
         });
       }
-      if (e.target.name === 'address' &&
-        !addressRe.test(this.state.address)
-      ) {
-        e.target.style.borderColor = 'red';
+      if (e.target.name === "phone" && !phoneRe.test(this.state.phone)) {
+        e.target.style.borderColor = "red";
+        this.setState({ phoneError: "Enter a valid number" });
+      }
+      if (e.target.name === "password" && this.state.password.length < 8) {
+        e.target.style.borderColor = "red";
         this.setState({
-          addressError: 'enter a valid address'
+          passwordError: "password must be at least 8 characters long"
+        });
+      }
+      if (
+        e.target.name === "confirm" &&
+        e.target.value !== this.state.password
+      ) {
+        e.target.style.borderColor = "red";
+        this.setState({
+          confirmError: "password do not match"
+        });
+      }
+      if (e.target.name === "address" && !addressRe.test(this.state.address)) {
+        e.target.style.borderColor = "red";
+        this.setState({
+          addressError: "enter a valid address"
         });
       }
     } else {
-      if (e.target.name === 'email') {
-        this.setState({ emailError: 'should not be empty' });
-        e.target.style.borderColor = 'red';
-      } else if (e.target.name === 'phone') {
-        this.setState({ phoneError: 'should not be empty' });
-        e.target.style.borderColor = 'red';
-      } else if (e.target.name === 'password') {
-        this.setState({ passwordError: 'should not be empty' });
-        e.target.style.borderColor = 'red';
-      } else if (e.target.name === 'username') {
-        this.setState({ usernameError: 'should not be empty' });
-        e.target.style.borderColor = 'red';
-      } else if (e.target.name === 'address') {
-        this.setState({ addressError: 'should not be empty' });
-        e.target.style.borderColor = 'red';
+      if (e.target.name === "email") {
+        this.setState({ emailError: "should not be empty" });
+        e.target.style.borderColor = "red";
+      } else if (e.target.name === "phone") {
+        this.setState({ phoneError: "should not be empty" });
+        e.target.style.borderColor = "red";
+      } else if (e.target.name === "password") {
+        this.setState({ passwordError: "should not be empty" });
+        e.target.style.borderColor = "red";
+      } else if (e.target.name === "username") {
+        this.setState({ usernameError: "should not be empty" });
+        e.target.style.borderColor = "red";
+      } else if (e.target.name === "address") {
+        this.setState({ addressError: "should not be empty" });
+        e.target.style.borderColor = "red";
       }
     }
   }
@@ -203,145 +202,156 @@ class Signup extends Component {
    */
   render() {
     return (
-      <div>
-        <Header/>
-        <main id="main-form">
-          <div className="form-jumbotron">
-            <h3>Fast Food Fast SignUp</h3>
-            <h5>Sign Up to Fast Food Fast</h5>
-            <div
-              className="loader"
-              ref={this.loaderRef}
-            >
-            </div>
-            <small
-              className="error"
-              id="signup-error">{this.state.signupError}</small>
-            <div>
-              <b><span className="error-span"></span></b>
-            </div>
-            <form className="signup col-form" onSubmit={this.onSubmit}>
-              <div className="reg-div">
-                <i className="fa fa-envelope icon"></i>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required="required"
-                  placeholder="Email"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                  onFocus={this.onFocus}
-                />
-              </div>
-              <small
-                name="emailError"
-                className="error"
-                id="email-error">{this.state.emailError}</small>
-              <div className="reg-div">
-                <i className="fa fa-at icon"></i>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  required="required"
-                  placeholder="Username"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                  onFocus={this.onFocus}
-                />
-              </div>
-              <small
-                ref={this.usernameErrorRef}
-                className="error"
-                id="username-error">{this.state.usernameError}</small>
-              <div className="reg-div">
-                <i className="fa fa-phone icon"></i>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="text"
-                  required="required"
-                  placeholder="Phone Number"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                  onFocus={this.onFocus}
-                />
-              </div>
-              <small
-                className="error"
-                id="phone-error">{this.state.phoneError}</small>
-              <div className="reg-div">
-                <i className="fa fa-lock icon"></i>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required="required"
-                  placeholder="Password"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                  onFocus={this.onFocus}
-                />
-              </div>
-              <small
-                className="error"
-                id="password-error">{this.state.passwordError}</small>
-              <div className="reg-div">
-                <i className="fa fa-lock icon"></i>
-                <input
-                  id="repeat-password"
-                  name="confirm"
-                  type="password"
-                  required="required"
-                  placeholder="Confirm Password"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                  onFocus={this.onFocus}
-                />
-              </div>
-              <small
-                className="error"
-                id="repeat-password-error">{this.state.confirmError}</small>
-              <div className="reg-div">
-                <i className="fa fa-home icon"></i>
-                <textarea
-                  maxLength="70"
-                  name="address"
-                  required="required"
-                  id="address"
-                  placeholder="Address where you receive order"
-                  className="signup-textarea"
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                  onFocus={this.onFocus}>
-                </textarea>
-              </div>
-              <small
-                ref={this.addressErrorRef}
-                className="error"
-                id="address-error">{this.state.addressError}</small>
+      <div
+        id="img-cover"
+        style={{
+          background: `url(${backgroundImg}) no-repeat fixed`,
+          backgroundSize: "cover"
+        }}
+      >
+        <div id="dim-img">
+          <Header />
+          <main id="main-form">
+            <div className="form-jumbotron">
+              <h3>Fast Food Fast SignUp</h3>
+              <h5>Sign Up to Fast Food Fast</h5>
+              <div className="loader" ref={this.loaderRef} />
+              <small className="error" id="signup-error">
+                {this.state.signupError}
+              </small>
               <div>
-                <button
-                  className="form-btn"
-                  type="submit"
-                  disabled={this.state.inValidForm}
+                <b>
+                  <span className="error-span" />
+                </b>
+              </div>
+              <form className="signup col-form" onSubmit={this.onSubmit}>
+                <div className="reg-div">
+                  <i className="fa fa-envelope icon" />
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required="required"
+                    placeholder="Email"
+                    onChange={this.onChange}
+                    onBlur={this.onBlur}
+                    onFocus={this.onFocus}
+                  />
+                </div>
+                <small name="emailError" className="error" id="email-error">
+                  {this.state.emailError}
+                </small>
+                <div className="reg-div">
+                  <i className="fa fa-at icon" />
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    required="required"
+                    placeholder="Username"
+                    onChange={this.onChange}
+                    onBlur={this.onBlur}
+                    onFocus={this.onFocus}
+                  />
+                </div>
+                <small
+                  ref={this.usernameErrorRef}
+                  className="error"
+                  id="username-error"
                 >
-                SIGN UP
-                </button>
-              </div>
-              <div className="new-old-user">
-                <Link to="/login">Have an account? Log in</Link>
-              </div>
-            </form>
-          </div>
-        </main>
-        <IndexFooter/>
+                  {this.state.usernameError}
+                </small>
+                <div className="reg-div">
+                  <i className="fa fa-phone icon" />
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="text"
+                    required="required"
+                    placeholder="Phone Number"
+                    onChange={this.onChange}
+                    onBlur={this.onBlur}
+                    onFocus={this.onFocus}
+                  />
+                </div>
+                <small className="error" id="phone-error">
+                  {this.state.phoneError}
+                </small>
+                <div className="reg-div">
+                  <i className="fa fa-lock icon" />
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required="required"
+                    placeholder="Password"
+                    onChange={this.onChange}
+                    onBlur={this.onBlur}
+                    onFocus={this.onFocus}
+                  />
+                </div>
+                <small className="error" id="password-error">
+                  {this.state.passwordError}
+                </small>
+                <div className="reg-div">
+                  <i className="fa fa-lock icon" />
+                  <input
+                    id="repeat-password"
+                    name="confirm"
+                    type="password"
+                    required="required"
+                    placeholder="Confirm Password"
+                    onChange={this.onChange}
+                    onBlur={this.onBlur}
+                    onFocus={this.onFocus}
+                  />
+                </div>
+                <small className="error" id="repeat-password-error">
+                  {this.state.confirmError}
+                </small>
+                <div className="reg-div">
+                  <i className="fa fa-home icon" />
+                  <textarea
+                    maxLength="70"
+                    name="address"
+                    required="required"
+                    id="address"
+                    placeholder="Address where you receive order"
+                    className="signup-textarea"
+                    onChange={this.onChange}
+                    onBlur={this.onBlur}
+                    onFocus={this.onFocus}
+                  />
+                </div>
+                <small
+                  ref={this.addressErrorRef}
+                  className="error"
+                  id="address-error"
+                >
+                  {this.state.addressError}
+                </small>
+                <div>
+                  <button
+                    className="form-btn"
+                    type="submit"
+                    disabled={this.state.inValidForm}
+                  >
+                    SIGN UP
+                  </button>
+                </div>
+                <div className="new-old-user">
+                  <Link to="/login">Have an account? Log in</Link>
+                </div>
+              </form>
+            </div>
+          </main>
+          <IndexFooter />
+        </div>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   authenticated: state.authReducer.authenticated,
   user: state.authReducer.user,
   error: state.authReducer.error
@@ -354,4 +364,7 @@ Signup.propTypes = {
   user: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, { authAction })(Signup);
+export default connect(
+  mapStateToProps,
+  { authAction }
+)(Signup);
