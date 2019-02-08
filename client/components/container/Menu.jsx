@@ -29,16 +29,23 @@ class Menu extends Component {
       <div className="menu-row">
         <div className="bottom-line">
           <div className="space-item-in-flex">
-            <p className="pad-left pad-right">{this.props.food}</p>
-            <p className="pad-left pad-right">
-              {formatPrice(this.props.price)}
-            </p>
+            <b>
+              <p className="pad-left pad-right">{this.props.food}</p>
+            </b>
+            <b>
+              <p className="pad-left pad-right">
+                {formatPrice(this.props.price)}
+              </p>
+            </b>
           </div>
           <div
             className="space-item-in-flex"
             style={{ marginTop: "11px", display: "flex" }}
           >
-            <p className="pad-left pad-right no-marg-top">
+            <p
+              className="pad-left pad-right no-marg-top"
+              style={{ margin: 0, paddingRight: "54px", paddingBottom: "10px" }}
+            >
               <small className="all-menu" style={{ textAlign: "justify" }}>
                 {this.props.description}
               </small>
@@ -52,7 +59,9 @@ class Menu extends Component {
                   }}
                   className="pad-right remove-item-btn"
                 >
-                  <img src={removeImg} />
+                  <span style={{ color: "white" }}>
+                    <i className="fas fa-minus" />
+                  </span>
                 </button>
               ) : (
                 <button
@@ -68,7 +77,13 @@ class Menu extends Component {
                     this.setState({ isAdded: true });
                   }}
                 >
-                  <img src={addImg} />
+                  <span
+                    style={{
+                      color: "white"
+                    }}
+                  >
+                    <i className="fas fa-plus" />
+                  </span>
                 </button>
               )}
             </div>

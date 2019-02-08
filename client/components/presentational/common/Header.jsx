@@ -5,14 +5,8 @@ import logoutUser from '../../../utils/logout';
 import { brandImg, backgroundImg } from '../../../public/images';
 
 const Header = () => (
-  <div
-    id="img-cover"
-    style={{
-      background: `url(${backgroundImg}) no-repeat fixed`,
-      backgroundSize: 'cover'
-    }}
-  >
-    <div id="dim-img">
+  <div>
+    <div>
       <nav className="topnav" id="Topnav">
         <div id="brand-div">
           <img className="nav-brand" src={brandImg} />
