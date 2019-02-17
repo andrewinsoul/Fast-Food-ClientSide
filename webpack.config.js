@@ -40,13 +40,13 @@ module.exports = {
   },
   plugins: [
     new HtmlwebpackPlugin({
-      template: "./index.html"
+      template: "./index.html",
+      favicon: "./client/public/images/favicon.ico"
     })
   ],
   resolve: { extensions: ["*", ".js", ".jsx", ".ico", "jpg", ".png"] },
-  // devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-source-map',
   devServer: {
-    contentBase: path.join(__dirname, "client/public"),
     historyApiFallback: true
   }
 };

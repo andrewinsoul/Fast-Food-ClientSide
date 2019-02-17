@@ -378,7 +378,7 @@ h1 {
   border-radius: 4px
  }
  #menu-items, .menu-items {
-  display: flex; 
+  display: flex;
   flex-direction: column;
  }
  #menu-cart-cat-container {
@@ -899,6 +899,10 @@ td.accepted, td.declined {
   }
   #cart {
     position: static;
+  }
+  #menu-items {
+    height: 60vh;
+    overflow-y: scroll;
   }
   #cusine-category, #restuarant-menu, #cart, #search-category {
     width: 96%;
